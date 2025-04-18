@@ -2,6 +2,14 @@
   display: none !important;
 }
 
+*{
+    box-sizing: border-box;
+}
+
 body {
-  @apply antialiased font-sans font-normal;
+  @apply antialiased font-normal font-roboto text-base;
+}
+
+.container{
+    @apply mx-auto max-w-2xl px-default;
 }

@@ -1,0 +1,9 @@
+h1{
+    @apply font-bebas text-h1 text-primary;
+}
+h2{
+    @apply font-bebas text-h2 text-primary;
+}
+h3{
+    @apply font-bebas text-h3 text-primary;
+}

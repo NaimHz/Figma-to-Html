@@ -1,7 +1,38 @@
 :root {
-  --color-primary: oklch(38.94% 0.1494 262.32);
+  --primary: #000000;
+  --secondary: #FFF;
+
+  --font-bebas: 'Bebas Neue', sans-serif;
+  --font-roboto: 'Roboto', sans-serif;
+
+  --container-2xl: 1440px;
+
+  --text-h1: 70px;
+  --text-h2: 58px;
+  --text-h3: 40px;
+  --text-base: 16px;
+
+  --radius-rounded: 28px;
+
+  --spacing-default: 40px;
 }
 
-@theme inline {
-  --color-primary: var(--color-primary);
+@theme {
+
+  --color-primary: var(--primary);
+  --color-secondary: var(--secondary);
+
+  --container-2xl: var(--container-2xl);
+
+  --font-bebas: var(--font-bebas);
+  --font-roboto: var(--font-roboto);
+
+  --text-h1: var(--text-h1);
+  --text-h2: var(--text-h2);
+  --text-h3: var(--text-h3);
+  --text-base: var(--text-base);
+
+  --radius-rounded: var(--radius-rounded);
+
+  --spacing-default: var(--spacing-default);
 }
