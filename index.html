@@ -16,11 +16,10 @@
             <div class="w-full py-6 flex gap-12 items-center border-b">
                 <img src="src/assets/logo.png" class="w-20" alt="Logo du site" />
                 <ul class="flex gap-4">
-                    <li><a href="index.html">Accueil</a></li>
-                    <li><a href="ListeEmargement.html">Liste des précenses</a></li>
-                    <li><a href="ListeEleve.html">Emarger</a></li>
-                    <li><a href="ListeProfesseur.html">Formulaire</a></li>
-                    <li><a href="ListeProfesseur.html">Questions</a></li>
+                    <li><a href="index.html">Liste des précenses</a></li>
+                    <li><a href="emargement.html">Emarger</a></li>
+                    <li><a href="resultats.html">Formulaire</a></li>
+                    <li><a href="formulaire.html">Questions</a></li>
                 </ul>
                 <button class="btn-primary ml-auto">Déconnexion</button>
             </div>
@@ -173,8 +172,7 @@
                         class="flex max-w-lg flex-col gap-4 overflow-hidden rounded-radius border border-outline bg-surface text-on-surface dark:border-outline-dark dark:bg-surface-dark-alt dark:text-on-surface-dark">
                         <div
                             class="flex flex-col gap-8 items-center justify-between border-b border-outline bg-white px-12 p-6 relative">
-                            <h3 id="defaultModalTitle" class="text-center border-b w-full">
-                                Signature de Hamza Naim
+                            <h3 id="defaultModalTitle" class="text-center border-b w-full" x-text="`Signature de ${personneActive.prenom} ${personneActive.nom}`">
                             </h3>
                             <svg
                                 x-on:click.self="modalSignatureIsOpen = false"
@@ -284,11 +282,10 @@
                     <img src="src/assets/logo.png" class="w-20" alt="Logo du site" />
                 </div>
                 <ul class="flex gap-4 items-center">
-                    <li><a href="index.html">Accueil</a></li>
-                    <li><a href="ListeEmargement.html">Liste des précenses</a></li>
-                    <li><a href="ListeEleve.html">Emarger</a></li>
-                    <li><a href="ListeProfesseur.html">Formulaire</a></li>
-                    <li><a href="ListeProfesseur.html">Questions</a></li>
+                    <li><a href="index.html">Liste des précenses</a></li>
+                    <li><a href="emargement.html">Emarger</a></li>
+                    <li><a href="resultats.html">Résultats</a></li>
+                    <li><a href="formulaire.html">Formulaire</a></li>
                 </ul>
                 <div class="flex gap-2 items-center">
                     <svg
