@@ -25,6 +25,7 @@
                 <button class="btn-primary ml-auto">Déconnexion</button>
             </div>
         </header>
+
         <div class="container">
             <div class="flex flex-col gap-3 py-12 border-b">
                 <p>Tony Botalla</p>
@@ -32,47 +33,35 @@
                 <p>Session du 18/04/2025 | 9h00 - 12h00</p>
             </div>
         </div>
+
         <main class="container">
-            <div class="flex flex-col my-24" x-data="{modalSignatureIsOpen: false,modalQrCodeIsOpen: false,modalHistoryIsOpen: false}">
+            <div
+                class="flex flex-col my-24"
+                x-data="{ personnes: [
+                { nom: 'Dupont', prenom: 'Jean', statut: 'Présent', signature: 'à 9h05' },
+                { nom: 'Martin', prenom: 'Claire', statut: 'Absent', signature: '' },
+                { nom: 'Durand', prenom: 'Luc', statut: '', signature: '' },
+                ]
+                ,modalSignatureIsOpen: false
+                ,modalQrCodeIsOpen: false
+                ,modalHistoryIsOpen: false
+                ,personneActive: null
+            }">
                 <div class="flex justify-between">
                     <h2>Liste des émargements</h2>
                     <div class="flex items-center justify-center gap-4">
-                        <button class="btn-secondary">Afficher le QR Code</button>
-                        <button class="btn-primary">Voir l'historique des séances</button>
+                        <button class="btn-secondary" @click="modalQrCodeIsOpen=true">Afficher le QR Code</button>
+                        <button class="btn-primary" @click="modalHistoryIsOpen=true">Voir l'historique des séances</button>
                     </div>
                 </div>
                 <div class="flex justify-between mt-8 mb-4">
                     <div class="flex items-center gap-2 font-semibold">
-                        <svg
-                            class="w-4 h-4 text-gray-800 dark:text-white"
-                            aria-hidden="true"
-                            xmlns="http://www.w3.org/2000/svg"
-                            fill="none"
-                            viewBox="0 0 8 14">
-                            <path
-                                stroke="currentColor"
-                                stroke-linecap="round"
-                                stroke-linejoin="round"
-                                stroke-width="2"
-                                d="M7 1 1.3 6.326a.91.91 0 0 0 0 1.348L7 13" />
-                        </svg>
+                        <img src="src/assets/chevron-left.svg" class="w-6" alt="" />
                         <span>Séance précédente</span>
                     </div>
                     <div class="flex items-center gap-2 font-semibold">
                         <span>Séance suivante</span>
-                        <svg
-                            class="w-4 h-4 text-gray-800 dark:text-white"
-                            aria-hidden="true"
-                            xmlns="http://www.w3.org/2000/svg"
-                            fill="none"
-                            viewBox="0 0 8 14">
-                            <path
-                                stroke="currentColor"
-                                stroke-linecap="round"
-                                stroke-linejoin="round"
-                                stroke-width="2"
-                                d="m1 13 5.7-5.326a.909.909 0 0 0-1.348L1 1" />
-                        </svg>
+                        <img src="src/assets/chevron-right.svg" class="w-6" alt="" />
                     </div>
                 </div>
                 <div class="border px-5 py-2">
@@ -89,73 +78,78 @@
                         </tr>
                     </thead>
                     <tbody>
-                        <tr class="border-b">
-                            <td class="w-[310px] px-4 py-2 border-x text-center">Hamza</td>
-                            <td class="w-[310px] px-4 py-2 border-x text-center">Naim</td>
-                            <td class="w-[310px] px-4 py-2 border-x text-center">
-                                <span
-                                    class="text-[#1eff00] border rounded-2xl px-2.5 p-1.5 font-semibold"
-                                    >Présent</span
-                                >
-                            </td>
-                            <td
-                                class="w-[310px] px-4 py-2 border-x text-center cursor-pointer"
-                                x-on:click="modalSignatureIsOpen = true">
-                                <div class="flex items-center justify-center">
-                                    <div>
-                                        <img
-                                            src="src/assets/signature.webp"
-                                            class="w-20"
-                                            alt="Signature" />
+                        <template
+                            x-for="personne in personnes"
+                            :key="personne.nom + personne.prenom">
+                            <tr class="border-b">
+                                <td
+                                    class="w-[310px] px-4 py-4 border-x text-center"
+                                    x-text="personne.nom"></td>
+                                <td
+                                    class="w-[310px] px-4 py-4 border-x text-center"
+                                    x-text="personne.prenom">
+                                    Naim
+                                </td>
+                                <td class="w-[310px] px-4 py-4 border-x text-center">
+                                    <span
+                                        class="text-[#1eff00] border rounded-2xl px-2.5 p-1.5 font-semibold w-fit mx-auto"
+                                        :class="personne.statut === 'Présent' ? 'block' : 'hidden'"
+                                        >Présent</span
+                                    >
+                                    <span
+                                        class="text-[#FF0004] border rounded-2xl px-2.5 p-1.5 font-semibold w-fit mx-auto"
+                                        :class="personne.statut === 'Absent' ? 'block' : 'hidden'"
+                                        >Absent</span
+                                    >
+                                </td>
+                                <td
+                                    class="w-[310px] px-4 py-4 border-x text-center cursor-pointer"
+                                    x-on:click="modalSignatureIsOpen = true; personneActive = personne">
+                                    <div
+                                        class="flex items-center justify-center"
+                                        :class="personne.signature === '' ? 'hidden' : 'block'">
+                                        <div>
+                                            <img
+                                                src="src/assets/signature.webp"
+                                                class="w-20"
+                                                alt="Signature" />
+                                        </div>
+                                        <div x-text="personne.signature"></div>
                                     </div>
-                                    <div>à 9h05</div>
-                                </div>
-                            </td>
-                            <td class="w-[310px] px-4 py-2 border-x text-center">
-                                <div class="flex flex-col items-center">
-                                    <button class="btn-secondary">Annuler la signature</button>
-                                </div>
-                            </td>
-                        </tr>
-                    </tbody>
-                    <tbody>
-                        <tr class="border-b">
-                            <td class="w-[310px] px-4 py-2 border-x text-center">Hamza</td>
-                            <td class="w-[310px] px-4 py-2 border-x text-center">Naim</td>
-                            <td class="w-[310px] px-4 py-2 border-x text-center">
-                                <span
-                                    class="text-[#FF0004] border rounded-2xl px-2.5 p-1.5 font-semibold"
-                                    >Absent</span
-                                >
-                            </td>
-                            <td class="w-[310px] px-4 py-2 border-x text-center">Pas renseigné</td>
-                            <td class="w-[310px] px-4 py-2 border-x text-center">
-                                <div class="flex flex-col items-center">
-                                    <button class="btn-primary"                     x-on:click="modalSignatureIsOpen = true"
-                                    >Signé pour l'élève</button>
-                                </div>
-                            </td>
-                        </tr>
-                    </tbody>
-                    <tbody>
-                        <tr class="border-b">
-                            <td class="w-[310px] px-4 py-2 border-x text-center">Hamza</td>
-                            <td class="w-[310px] px-4 py-2 border-x text-center">Naim</td>
-                            <td class="w-[310px] px-4 py-2 border-x text-center"></td>
-                            <td class="w-[310px] px-4 py-2 border-x text-center">Pas renseigné</td>
-                            <td class="w-[310px] px-4 py-2 border-x text-center">
-                                <div class="flex flex-col items-center">
-                                    <button class="btn-primary">Déclarer absent</button>
-                                </div>
-                            </td>
-                        </tr>
+                                </td>
+                                <td class="w-[310px] px-4 py-4 border-x text-center">
+                                    <div class="flex flex-col items-center">
+                                        <button
+                                            class="btn-secondary"
+                                            :class="personne.statut === 'Présent' ? 'block' : 'hidden'"
+                                            @click="personne.signature = ''; personne.statut=''">
+                                            Annuler la signature
+                                        </button>
+                                        <button
+                                            class="btn-primary"
+                                            x-on:click="modalSignatureIsOpen = true; personneActive = personne"
+                                            :class="personne.statut === 'Absent' ? 'block' : 'hidden'">
+                                            Signé pour l'élève
+                                        </button>
+                                        <button
+                                            class="btn-primary"
+                                            :class="personne.statut === '' ? 'block' : 'hidden'"
+                                            @click="personne.statut='Absent'; ">
+                                            Déclarer absent
+                                        </button>
+                                    </div>
+                                </td>
+                            </tr>
+                        </template>
                     </tbody>
                 </table>
+
+                <!-- Modale de signature -->
+
                 <div
                     x-cloak
                     x-show="modalSignatureIsOpen"
                     x-transition.opacity.duration.200ms
-                    x-trap.inert.noscroll="modalSignatureIsOpen"
                     x-on:keydown.esc.window="modalSignatureIsOpen = false"
                     x-on:click.self="modalSignatureIsOpen = false"
                     class="fixed inset-0 z-30 flex items-end justify-center bg-black/20 p-4 pb-8 backdrop-blur-md sm:items-center lg:p-8"
@@ -191,11 +185,64 @@
                                     class="w-264"
                                     alt="Signature" />
                             </div>
+                            <div>
+                                <button
+                                    class="btn-primary"
+                                    x-on:click="modalSignatureIsOpen = false"
+                                    @click="personneActive.signature = 'à 9h05'; personneActive.statut = 'Présent'">
+                                    Valider la signature
+                                </button>
+                            </div>
                         </div>
+                    </div>
+                </div>
+
+                <!-- Modale de QR Code -->
+
+                <div
+                    x-cloak
+                    x-show="modalQrCodeIsOpen"
+                    x-transition.opacity.duration.200ms
+                    x-on:keydown.esc.window="modalQrCodeIsOpen = false"
+                    x-on:click.self="modalQrCodeIsOpen = false"
+                    class="fixed inset-0 z-30 flex items-end justify-center bg-black/20 p-4 pb-8 backdrop-blur-md sm:items-center lg:p-8"
+                    role="dialog"
+                    aria-modal="true"
+                    aria-labelledby="defaultModalTitle">
+                    <div
+                        x-show="modalQrCodeIsOpen"
+                        x-transition:enter="transition ease-out duration-200 delay-100 motion-reduce:transition-opacity"
+                        x-transition:enter-start="opacity-0 scale-50"
+                        x-transition:enter-end="opacity-100 scale-100"
+                        class="flex flex-col gap-4 overflow-hidden rounded-radius border border-outline bg-surface text-on-surface dark:border-outline-dark dark:bg-surface-dark-alt dark:text-on-surface-dark">
+                        <div
+                            class="flex flex-col gap-8 items-center justify-between border-b border-outline px-12 p-6 relative">
+                            <img src="src/assets/qrcode.png" class="!w-124" alt="">
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Modale d'historique -->
+
+                <div
+                    x-show="modalHistoryIsOpen"
+                    x-transition:enter="transition ease-out duration-300 transform"
+                    x-transition:enter-start="translate-x-full opacity-0"
+                    x-transition:enter-end="translate-x-0 opacity-100"
+                    x-transition:leave="transition ease-in duration-200 transform"
+                    x-transition:leave-start="translate-x-0 opacity-100"
+                    x-transition:leave-end="translate-x-full opacity-0"
+                    class="fixed right-0 top-0 z-10 w-124 shadow-2xl bg-white text-black h-screen p-4"
+                    @click.outside="modalHistoryIsOpen = false"
+                    x-cloak
+                    >
+                    <div class="flex flex-col justify-center items-center">
+                        <h3 class="text-center">Historique des séances</h3>
                     </div>
                 </div>
             </div>
         </main>
+
         <footer class="container border-t pt-20" class="">
             <div class="flex justify-between">
                 <div>
