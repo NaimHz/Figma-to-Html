@@ -38,9 +38,14 @@
             <div
                 class="flex flex-col my-24"
                 x-data="{ personnes: [
-                { nom: 'Dupont', prenom: 'Jean', statut: 'Présent', signature: 'à 9h05' },
-                { nom: 'Martin', prenom: 'Claire', statut: 'Absent', signature: '' },
-                { nom: 'Durand', prenom: 'Luc', statut: '', signature: '' },
+                { nom: 'Hamza', prenom: 'Naim', statut: 'Présent', signature: 'à 9h05' },
+                { nom: 'Bricman', prenom: 'Mathis', statut: 'Absent', signature: '' },
+                { nom: 'Martin', prenom: 'Mamadou', statut: '', signature: '' },
+                ]
+                ,history: [
+                { day: '2025-04-18', hour: '14h00 - 18h00', teacher:'Tony Botalla', 'course': 'Ergonomie et framework CSS', participants: 8},
+                { day: '2025-04-17', hour: '9h00 - 12h00', teacher:'Tony Botalla', 'course': 'Ergonomie et framework CSS', participants: 10},
+                { day: '2025-04-16', hour: '14h00 - 18h00', teacher:'Tony Botalla', 'course': 'Ergonomie et framework CSS', participants: 6},
                 ]
                 ,modalSignatureIsOpen: false
                 ,modalQrCodeIsOpen: false
@@ -50,8 +55,12 @@
                 <div class="flex justify-between">
                     <h2>Liste des émargements</h2>
                     <div class="flex items-center justify-center gap-4">
-                        <button class="btn-secondary" @click="modalQrCodeIsOpen=true">Afficher le QR Code</button>
-                        <button class="btn-primary" @click="modalHistoryIsOpen=true">Voir l'historique des séances</button>
+                        <button class="btn-secondary" @click="modalQrCodeIsOpen=true">
+                            Afficher le QR Code
+                        </button>
+                        <button class="btn-primary" @click="modalHistoryIsOpen=true">
+                            Voir l'historique des séances
+                        </button>
                     </div>
                 </div>
                 <div class="flex justify-between mt-8 mb-4">
@@ -217,7 +226,7 @@
                         class="flex flex-col gap-4 overflow-hidden rounded-radius border border-outline bg-surface text-on-surface dark:border-outline-dark dark:bg-surface-dark-alt dark:text-on-surface-dark">
                         <div
                             class="flex flex-col gap-8 items-center justify-between border-b border-outline px-12 p-6 relative">
-                            <img src="src/assets/qrcode.png" class="!w-124" alt="">
+                            <img src="src/assets/qrcode.png" class="!w-124" alt="" />
                         </div>
                     </div>
                 </div>
@@ -232,12 +241,38 @@
                     x-transition:leave="transition ease-in duration-200 transform"
                     x-transition:leave-start="translate-x-0 opacity-100"
                     x-transition:leave-end="translate-x-full opacity-0"
-                    class="fixed right-0 top-0 z-10 w-124 shadow-2xl bg-white text-black h-screen p-4"
+                    class="fixed right-0 top-0 z-10 w-124 shadow-2xl bg-white text-black h-screen px-8 py-12"
                     @click.outside="modalHistoryIsOpen = false"
-                    x-cloak
-                    >
+                    x-cloak>
                     <div class="flex flex-col justify-center items-center">
-                        <h3 class="text-center">Historique des séances</h3>
+                        <h3 class="text-center mb-6">Historique des séances</h3>
+                        <div
+                            class="w-full divide-y divide-outline overflow-hidden rounded-radius border border-outline bg-surface-alt/40 text-on-surface dark:divide-outline-dark dark:border-outline-dark dark:bg-surface-dark-alt/50 dark:text-on-surface-dark">
+                            <div x-data="{ open: null }">
+                                <template x-for="(seance, index) in history" :key="index">
+                                    <div
+                                        class="border px-2 py-4 cursor-pointer"
+                                        @click="open = open === index ? null : index"
+                                        :aria-expanded="open === index">
+                                        <div>
+                                            <div
+                                                x-text="'Séance du ' + seance.day "
+                                                class="text-xl text-center font-semibold">
+                                            </div>
+                                            <div x-text="seance.hour" class="text-center"></div>
+
+                                        </div>
+                                        <div x-show="open === index" x-transition class="pt-2">
+                                            <div class="border-t flex flex-col gap-2 pt-4 px-6">
+                                                <div x-text="seance.teacher" class="text-lg"></div>
+                                                <div x-text="seance.course" class="text-2xl font-bold"></div>
+                                                <div x-text="seance.participants + ' précenses'" class="underline underline-offset-1"></div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </template>
+                            </div>
+                        </div>
                     </div>
                 </div>
             </div>
