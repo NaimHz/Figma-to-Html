@@ -36,6 +36,7 @@ Ce projet est une conversion d'une maquette Figma en un site web interactif. Il 
 - **Alpine.js** : Gestion des états et interactions dynamiques.
 - **Tailwind CSS** : Framework CSS pour le design.
 - **Vite** : Outil de build et serveur de développement rapide.
+- **Flowbite** : Bibliotèque de composants tailwind.
 
 ## Stockage
 
