@@ -1,7 +1,7 @@
 # Projet Figma-to-Html
 
 ## Description
-Ce projet est une conversion d'une maquette Figma en un site web interactif. Il inclut des fonctionnalités de gestion de présences, d'évaluation et d'affichage de QR codes.
+Ce projet est une conversion d'une maquette Figma en un site web interactif. Il inclut des fonctionnalités de gestion de présences, d'évaluation et d'affichage de QR codes. La navigation au sein du site se fait par la barre de navigation sur le header ou footer.
 
 ## Démarrage du projet
 
