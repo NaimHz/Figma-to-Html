@@ -12,7 +12,7 @@
   --text-h3: 40px;
   --text-base: 16px;
 
-  --radius-rounded: 28px;
+  --radius-default: 28px;
 
   --spacing-default: 40px;
 }
@@ -32,7 +32,7 @@
   --text-h3: var(--text-h3);
   --text-base: var(--text-base);
 
-  --radius-rounded: var(--radius-rounded);
+  --radius-default: var(--radius-default);
 
   --spacing-default: var(--spacing-default);
 }

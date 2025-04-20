@@ -35,10 +35,123 @@
 
         <main class="container my-24">
             <h2>Collecte des reponses du formulaire</h2>
-            <p class="text-lg font-semibold">À la fin de la formation, le formateur doit consacrer 20 minutes aux stagiaires pour qu’ils remplissent un questionnaire d’évaluation.</p>
+            <p class="text-lg font-semibold">
+                À la fin de la formation, le formateur doit consacrer 20 minutes aux stagiaires pour
+                qu’ils remplissent un questionnaire d’évaluation.
+            </p>
         </main>
 
-        <footer class="container border-t pt-20" class="">
+        <main
+            class="container my-24"
+            x-data="{ personnes: [{
+                nom: 'Bricman',
+                prenom: 'Mathis',
+                avatar: './src/assets/avatar.avif',
+                progression: 50,
+            }, {
+                nom: 'Martin',
+                prenom: 'Mamadou',
+                avatar: './src/assets/avatar.avif',
+                progression: 75,
+            }, {
+                nom: 'Hamza',
+                prenom: 'Naim',
+                avatar: './src/assets/avatar.avif',
+                progression: 100,
+        }], modalQrCodeIsOpen: false }">
+            <div class="border rounded-default px-4 py-8 flex flex-col">
+                <table class="outline w-full rounded-default mt-6 p-4">
+                    <thead>
+                        <div class="flex items-center px-4">
+                            <div class="text-3xl font-semibold w-full">Participants</div>
+                            <div class="text-2xl font-semibold w-64">Progression</div>
+                        </div>
+                    </thead>
+                    <tbody>
+                        <template x-for="personne in personnes">
+                            <tr
+                                class="flex items-center"
+                                :class="personne == personnes[personnes.length - 1] ? 'border-b-0' : 'border-b'">
+                                <th class="flex items-center gap-4 w-1/12 py-2 px-4">
+                                    <img
+                                        x-bind:src="personne.avatar"
+                                        class="w-12 h-12 rounded-full"
+                                        alt="avatar" />
+                                </th>
+                                <th class="w-1/12">
+                                    <p x-text="personne.nom" class="font-semibold"></p>
+                                </th>
+                                <th class="w-1/12">
+                                    <p x-text="personne.prenom" class="font-semibold"></p>
+                                </th>
+                                <th class="ml-auto text-right px-4 flex items-center gap-4">
+                                    <p
+                                        x-text="personne.progression + '%'"
+                                        class="font-semibold text-center w-12"></p>
+                                    <div class="border rounded-default w-40">
+                                        <div
+                                            x-bind:style="'width: ' + personne.progression + '%'"
+                                            class="bg-[#1eff00] h-2 rounded-default"></div>
+                                    </div>
+                                </th>
+                            </tr>
+                        </template>
+                    </tbody>
+                </table>
+
+                <div class="flex justify-center items-center gap-4 mt-8">
+                    <div class="p-2 rounded-xl cursor-pointer border" @click="modalQrCodeIsOpen=true">
+                        <img
+                            id="qr-code"
+                            src="./src/assets/qrcode.png"
+                            alt="QR Code"
+                            class="w-32 h-32"
+                        />
+                    </div>
+                    <button
+                        class="btn-secondary mt-4"
+                        data-qrcode="12131231313"
+                        @click="
+                            navigator.clipboard.writeText($el.dataset.qrcode)
+                                .then(() => {
+                                    const original = $el.textContent;
+                                    $el.textContent = 'QR Code copié !';
+                                    setTimeout(() => $el.textContent = original, 2000);
+                                })
+                                .catch(() => alert('Erreur lors de la copie du QR Code'));
+                        ">
+                        Copier le QR Code
+                    </button>
+                </div>
+
+                <!-- Modale de QR Code -->
+
+                <div
+                    x-cloak
+                    x-show="modalQrCodeIsOpen"
+                    x-transition.opacity.duration.200ms
+                    x-on:keydown.esc.window="modalQrCodeIsOpen = false"
+                    x-on:click.self="modalQrCodeIsOpen = false"
+                    class="fixed inset-0 z-30 flex items-end justify-center bg-black/20 p-4 pb-8 backdrop-blur-md sm:items-center lg:p-8"
+                    role="dialog"
+                    aria-modal="true"
+                    aria-labelledby="defaultModalTitle">
+                    <div
+                        x-show="modalQrCodeIsOpen"
+                        x-transition:enter="transition ease-out duration-200 delay-100 motion-reduce:transition-opacity"
+                        x-transition:enter-start="opacity-0 scale-50"
+                        x-transition:enter-end="opacity-100 scale-100"
+                        class="flex flex-col gap-4 overflow-hidden rounded-radius border border-outline bg-surface text-on-surface dark:border-outline-dark dark:bg-surface-dark-alt dark:text-on-surface-dark">
+                        <div
+                            class="flex flex-col gap-8 items-center justify-between border-b border-outline px-12 p-6 relative">
+                            <img src="src/assets/qrcode.png" class="!w-124" alt="" />
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </main>
+
+        <footer class="container border-t pt-20">
             <div class="flex justify-between">
                 <div>
                     <img src="src/assets/logo.png" class="w-20" alt="Logo du site" />
