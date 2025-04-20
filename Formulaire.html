@@ -1,0 +1,151 @@
+<!doctype html>
+<html lang="fr">
+    <head>
+        <meta charset="UTF-8" />
+        <link rel="icon" type="image/svg+xml" href="/vite.svg" />
+        <link
+            href="https://cdn.jsdelivr.net/npm/flowbite@3.1.2/dist/flowbite.min.css"
+            rel="stylesheet" />
+        <script src="https://cdn.jsdelivr.net/npm/flowbite@3.1.2/dist/flowbite.min.js"></script>
+        <script defer src="https://cdn.jsdelivr.net/npm/alpinejs@3.x.x/dist/cdn.min.js"></script>
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <title>SchoolSign - Liste Emargement</title>
+    </head>
+    <body>
+        <header class="container">
+            <div class="w-full py-6 flex gap-12 items-center border-b">
+                <img src="src/assets/logo.png" class="w-20" alt="Logo du site" />
+                <ul class="flex gap-4">
+                    <li><a href="index.html">Liste des précenses</a></li>
+                    <li><a href="emargement.html">Emarger</a></li>
+                    <li><a href="resultats.html">Formulaire</a></li>
+                    <li><a href="formulaire.html" class="text-blue-500">Questions</a></li>
+                </ul>
+                <button class="btn-primary ml-auto">Déconnexion</button>
+            </div>
+        </header>
+
+        <div class="container">
+            <div class="flex flex-col gap-3 py-12 border-b">
+                <p>Tony Botalla</p>
+                <h1>Ergonomie et framework CSS</h1>
+                <p>Session du 18/04/2025 | 9h00 - 12h00</p>
+            </div>
+        </div>
+
+        <main class="container py-24">
+            <h2>Formulaire d'évaluation</h2>
+            <div class="border rounded-default"
+                x-data="{formulaire : [
+                    {question: 'Qu’est-ce qu’un Frame dans Figma ?', reponse: '', input: 'text'},
+                    {question: 'Comment ajouter du texte dans Figma ?', reponse: '', input: 'text'},
+                    {question: 'Quelle est la fonction principale d’un Frame dans Figma ?', reponse: '', input: 'radio', options: ['Créer des groupes', 'Définir des zones de travail', 'Ajouter des interactions', 'Exporter des fichiers']},
+                    {question: 'Quel outil permet de créer des formes dans Figma ?', reponse: '', input: 'radio', options: ['L’outil Plume', 'L’outil Rectangle', 'L’outil Texte', 'L’outil Main']},
+                    {question: 'Signature', reponse: '', input: 'textarea'}
+                ],
+                modalValidationIsOpen: false}">
+                <div class="flex flex-col m-4 border rounded-default py-4">
+                    <template x-for="question in formulaire">
+                        <div class="py-6" :class="question.question === 'Signature' ? '' : 'border-b'">
+                            <div class="flex flex-col gap-2 mb-4 mx-4">
+                                <label x-text="question.question" class="font-semibold"></label>
+                                <template x-if="question.input === 'radio'">
+                                    <div class="flex flex-col gap-2">
+                                        <template x-for="option in question.options">
+                                            <div class="flex items-center gap-2">
+                                                <input type="radio" :name="question.question" x-model="question.reponse" :value="option" />
+                                                <label x-text="option"></label>
+                                            </div>
+                                        </template>
+                                    </div>
+                                </template>
+                                <template x-if="question.input === 'text'">
+                                    <input type="text" x-model="question.reponse" class=" rounded p-2" />
+                                </template>
+                                <template x-if="question.input === 'textarea'">
+                                    <textarea x-model="question.reponse" class=" rounded p-2"></textarea>
+                                </template>
+                                <template x-if="question.input === 'Signature'">
+                                    <div class="">
+                                        <p>Signature</p>
+                                        <canvas id="signature-pad" class=" rounded"></canvas>
+                                        <button @click="question.reponse = 'signed'" class="btn-primary mt-2">Signer</button>
+                                    </div>
+                                </template>
+                            </div>
+                        </div>
+                    </template>
+                </div>
+                <div class="flex justify-center">
+                    <button @click="modalValidationIsOpen=true; setTimeout(() => {
+                        modalValidationIsOpen = false;
+                        console.log(modalValidationIsOpen);
+                    }, 2000)" class="btn-primary m-4">Envoyer le formulaire</button>
+                </div>
+                <div
+                    x-show="modalValidationIsOpen"
+                    class="fixed top-0 left-0 w-full h-full bg-black/30 flex items-center justify-center"
+                    x-transition:enter="transition ease-out duration-300"
+                    x-transition:enter-start="opacity-0"
+                    x-transition:enter-end="opacity-100"
+                    x-transition:leave="transition ease-in duration-200"
+                    x-transition:leave-start="opacity-100"
+                    x-transition:leave-end="opacity-0">
+                    <div class="bg-[#14AE5C] p-24 flex flex-col justify-center items-center rounded-default">
+                        <img src="src/assets/validation.png" alt="Icon Validation">
+                        <h3>Merci pour votre retour.</h3>
+                    </div>
+                </div>
+            </div>
+        </main>
+
+
+        <footer class="container border-t pt-20">
+            <div class="flex justify-between">
+                <div>
+                    <img src="src/assets/logo.png" class="w-20" alt="Logo du site" />
+                </div>
+                <ul class="flex gap-4 items-center">
+                    <li><a href="index.html">Liste des précenses</a></li>
+                    <li><a href="emargement.html">Emarger</a></li>
+                    <li><a href="resultats.html">Résultats</a></li>
+                    <li><a href="formulaire.html">Formulaire</a></li>
+                </ul>
+                <div class="flex gap-2 items-center">
+                    <svg
+                        xmlns="http://www.w3.org/2000/svg"
+                        x="0px"
+                        y="0px"
+                        width="30"
+                        height="30"
+                        viewBox="0 0 30 30">
+                        <path
+                            d="M15,3C8.373,3,3,8.373,3,15c0,6.016,4.432,10.984,10.206,11.852V18.18h-2.969v-3.154h2.969v-2.099c0-3.475,1.693-5,4.581-5 c1.383,0,2.115,0.103,2.461,0.149v2.753h-1.97c-1.226,0-1.654,1.163-1.654,2.473v1.724h3.593L19.73,18.18h-3.106v8.697 C22.481,26.083,27,21.075,27,15C27,8.373,21.627,3,15,3z"></path>
+                    </svg>
+                    <svg
+                        xmlns="http://www.w3.org/2000/svg"
+                        x="0px"
+                        y="0px"
+                        width="27"
+                        height="27"
+                        viewBox="0 0 50 50">
+                        <path
+                            d="M 16 3 C 8.83 3 3 8.83 3 16 L 3 34 C 3 41.17 8.83 47 16 47 L 34 47 C 41.17 47 47 41.17 47 34 L 47 16 C 47 8.83 41.17 3 34 3 L 16 3 z M 37 11 C 38.1 11 39 11.9 39 13 C 39 14.1 38.1 15 37 15 C 35.9 15 35 14.1 35 13 C 35 11.9 35.9 11 37 11 z M 25 14 C 31.07 14 36 18.93 36 25 C 36 31.07 31.07 36 25 36 C 18.93 36 14 31.07 14 25 C 14 18.93 18.93 14 25 14 z M 25 16 C 20.04 16 16 20.04 16 25 C 16 29.96 20.04 34 25 34 C 29.96 34 34 29.96 34 25 C 34 20.04 29.96 16 25 16 z"></path>
+                    </svg>
+                    <svg
+                        xmlns="http://www.w3.org/2000/svg"
+                        x="0px"
+                        y="0px"
+                        width="30"
+                        height="30"
+                        viewBox="0 0 50 50">
+                        <path
+                            d="M 11 4 C 7.134 4 4 7.134 4 11 L 4 39 C 4 42.866 7.134 46 11 46 L 39 46 C 42.866 46 46 42.866 46 39 L 46 11 C 46 7.134 42.866 4 39 4 L 11 4 z M 13.085938 13 L 21.023438 13 L 26.660156 21.009766 L 33.5 13 L 36 13 L 27.789062 22.613281 L 37.914062 37 L 29.978516 37 L 23.4375 27.707031 L 15.5 37 L 13 37 L 22.308594 26.103516 L 13.085938 13 z M 16.914062 15 L 31.021484 35 L 34.085938 35 L 19.978516 15 L 16.914062 15 z"></path>
+                    </svg>
+                </div>
+            </div>
+        </footer>
+        <main rel="main" class="container mx-auto p-4"></main>
+        <script type="module" src="src/js/main.js"></script>
+    </body>
+</html>
